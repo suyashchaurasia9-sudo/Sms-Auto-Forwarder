@@ -41,7 +41,24 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build Debug Apk
-      run: ./gradlew assembleDebug --no-daemon
+      id: build_apk
+      continue-on-error: true
+      run: |
+        ./gradlew assembleDebug --stacktrace --no-daemon 2>&1 | tee build_output.log
+        if [ ${PIPESTATUS[0]} -ne 0 ]; then
+          exit 1
+        fi
+
+    - name: Commit Diagnostics On Failure
+      if: steps.build_apk.outcome != 'success'
+      run: |
+        tail -n 150 build_output.log > BUILD_DIAGNOSTICS.txt
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add BUILD_DIAGNOSTICS.txt
+        git commit -m "Diagnostics: Capture Gradle Failure Log"
+        git push origin main
+        exit 1
 
     - name: Prepare Named Distribution Apk
       run: |
