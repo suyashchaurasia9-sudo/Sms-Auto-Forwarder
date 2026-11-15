@@ -18,11 +18,11 @@
 <br/>
 
 <a href="https://github.com/suyashchaurasia9-sudo/Sms-Auto-Forwarder/releases/latest/download/app-release.apk">
-  <img src="https://img.shields.io/badge/Download%20Release%20Apk-Official%20v1.0.3%20(Recommended)-00E676?style=for-the-badge&logo=android&logoColor=080B09" alt="Download Release Apk" height="42"/>
+  <img src="https://img.shields.io/badge/Download%20Release%20Apk-Official%20Release%20(Recommended)-00E676?style=for-the-badge&logo=android&logoColor=080B09" alt="Download Release Apk" height="42"/>
 </a>
 &nbsp;&nbsp;
 <a href="https://github.com/suyashchaurasia9-sudo/Sms-Auto-Forwarder/releases/latest/download/app-debug.apk">
-  <img src="https://img.shields.io/badge/Download%20Debug%20Apk-v1.0.3-141A15?style=for-the-badge&logo=android&logoColor=00E676" alt="Download Debug Apk" height="42"/>
+  <img src="https://img.shields.io/badge/Download%20Debug%20Apk-Development%20Build-141A15?style=for-the-badge&logo=android&logoColor=00E676" alt="Download Debug Apk" height="42"/>
 </a>
 
 

@@ -68,32 +68,51 @@ jobs:
         path: app/build/outputs/apk/release/app-release.apk
         retention-days: 30
 
+    - name: Purge All Previous GitHub Releases And Tags
+      if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+      run: |
+        echo "[*] Querying all existing releases for deletion..."
+        RELEASES=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github+json" \
+          https://api.github.com/repos/${{ github.repository }}/releases | jq -r '.[].id')
+        for REL_ID in $RELEASES; do
+          if [ "$REL_ID" != "null" ] && [ -n "$REL_ID" ]; then
+            echo "[*] Deleting previous release ID: $REL_ID..."
+            curl -s -X DELETE -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github+json" \
+              https://api.github.com/repos/${{ github.repository }}/releases/$REL_ID
+          fi
+        done
+        echo "[*] Previous releases purged successfully."
+
     - name: Publish Official Release On GitHub
       uses: softprops/action-gh-release@v2
       if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
       with:
-        tag_name: v1.0.3
-        name: "Sms Auto Forwarder v1.0.3 (Production Release)"
+        tag_name: v1.0.0
+        name: "Sms Auto Forwarder (Official Release)"
         make_latest: true
         body: |
-          # 🟢 Sms Auto Forwarder v1.0.3 (Production Release)
+          # 🟢 Sms Auto Forwarder (Official Release)
 
           ### What Is Included In This Release:
-          - **Pure SMS Copy & Forward Concept (No Telephony / Phone Call Permissions Required)**: Completely removed `READ_PHONE_STATE` from required permissions. The app now only requests standard SMS access ("Send and view SMS messages") to copy incoming messages and dispatch them.
-          - **Instant Permission Granting**: Single tap allows SMS access without confusing "make and manage phone calls" prompts.
-          - **Direct Settings Recovery**: If Android blocks the permission dialog, tapping "Grant" or the SMS row offers a direct 1-tap route to Settings.
-          - **Signed Production Release APK (`app-release.apk`)**: Standalone signed production release without debug overhead (Recommended).
-          - **Debug APK (`app-debug.apk`)**: Diagnostic developer package.
-          - **Autonomous 24/7 Background Forwarding Engine**: Keeps running in the background until manually turned off. Survives app swipes and device reboots.
-          - **Self-Executing Battery Optimization**: Automatically prompts and acquires battery optimization exemption without manual settings digging.
-          - **Direct Carrier Sim-To-Sim Routing**: Zero cloud servers, 100% private, works completely offline via mother's cellular SMS plan.
+          - **Pure Sms Copy And Forward Engine (Zero Phone Call Access Required)**: Completely Removed Unneeded Permissions. The Application Exclusively Requests Standard Sms Access To Intercept Incoming Messages And Forward Them.
+          - **Instant Permission Granting**: Single Tap Authorizes Sms Intercept And Dispatch Without Confusing Prompts.
+          - **Direct Settings Recovery**: Direct Route To Application Settings If The System Blocks Repeated Dialogs.
+          - **Optimized Top Bar Spacing**: Removed Excessive Hardcoded Top Padding, Adapting Responsively To Status Bars, Notches, And Cutouts.
+          - **Enhanced Ui/Ux Typography**: Scaled All Font Sizes And Touch Targets For Superior Readability And Effortless Operation.
+          - **Signed Production Release Apk (`app-release.apk`)**: Standalone Cryptographically Signed Release Build Without Debug Overhead (Recommended).
+          - **Debug Apk (`app-debug.apk`)**: Diagnostic Developer Build.
+          - **Autonomous 24/7 Background Forwarding Engine**: Operates Continuously In The Background Until Explicitly Stopped. Survives Device Reboots And App Task Swipes.
+          - **Self-Executing Battery Optimization**: Autonomously Requests Battery Exemption Without Manual Settings Navigation.
+          - **Direct Carrier Sim-To-Sim Routing**: Zero Cloud Dependencies, Completely Private, And Dispatches Over Cellular Sim Plan.
 
           ---
           ### 📲 Installation Guide:
-          1. Download the attached **`app-release.apk`** below (Recommended).
-          2. Transfer it to your mother's phone and tap to install (*Allow Unknown Apps* if prompted).
-          3. Tap **"Grant"** on **"Sms Intercept And Dispatch"** and tap **"Allow"**.
-          4. Enter your phone number, tap **"Save Configuration"**, and toggle the switch to **"Active"**.
+          1. Download The Attached **`app-release.apk`** Below (Recommended).
+          2. Transfer To Mother Phone And Install (*Allow Unknown Apps* If Prompted).
+          3. Tap **"Grant"** On **"Sms Intercept And Dispatch"** And Select **"Allow"**.
+          4. Enter Destination Phone Number, Tap **"Save Configuration"**, And Switch Toggle To **"Active"**.
         files: |
           app/build/outputs/apk/release/app-release.apk
           app/build/outputs/apk/debug/app-debug.apk
