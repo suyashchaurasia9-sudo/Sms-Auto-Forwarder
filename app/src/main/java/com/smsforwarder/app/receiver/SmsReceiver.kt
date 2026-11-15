@@ -20,6 +20,9 @@ class SmsReceiver : BroadcastReceiver() {
     companion object {
         private const val Tag = "SmsReceiver"
 
+        // Cache Preventing Duplicate Forwarding When Broadcast Is Delivered Concurrently
+        private val ProcessedSignatures = LinkedHashMap<String, Long>()
+
         // Keywords Matching Financial Transactions, One Time Passwords, And Bank Notifications
         private val OtpKeywords = listOf(
             "otp", "code", "bank", "credit", "debit", "acct", "account",
@@ -99,6 +102,24 @@ class SmsReceiver : BroadcastReceiver() {
         targetPhone: String
     ) {
         Log.d(Tag, "Processing Incoming Message Received From: $sender")
+
+        // 0. De-Duplication Guard
+        val messageSignature = "$sender:$body"
+        synchronized(ProcessedSignatures) {
+            val currentTime = System.currentTimeMillis()
+            val iterator = ProcessedSignatures.entries.iterator()
+            while (iterator.hasNext()) {
+                val entry = iterator.next()
+                if (currentTime - entry.value > 60000L) {
+                    iterator.remove()
+                }
+            }
+            if (ProcessedSignatures.containsKey(messageSignature)) {
+                Log.d(Tag, "Duplicate Broadcast Detected. Skipping Redundant Forward.")
+                return
+            }
+            ProcessedSignatures[messageSignature] = currentTime
+        }
 
         // 1. Loop Protection: Avoid Forwarding Messages Sent By Target Device Itself
         val sanitizedSender = sender.replace("+", "").replace(" ", "").replace("-", "")

@@ -58,11 +58,40 @@ class SmsForwarderService : Service() {
         }
     }
 
+    private var dynamicSmsReceiver: com.smsforwarder.app.receiver.SmsReceiver? = null
+
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onCreate() {
         super.onCreate()
         Log.d(Tag, "Sms Forwarder Service Created.")
+        RegisterDynamicReceiver()
+    }
+
+    private fun RegisterDynamicReceiver() {
+        try {
+            dynamicSmsReceiver = com.smsforwarder.app.receiver.SmsReceiver()
+            val filter = android.content.IntentFilter(android.provider.Telephony.Sms.Intents.SMS_RECEIVED_ACTION).apply {
+                priority = 999
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                registerReceiver(dynamicSmsReceiver, filter, Context.RECEIVER_EXPORTED)
+            } else {
+                registerReceiver(dynamicSmsReceiver, filter)
+            }
+            Log.d(Tag, "Dynamic Sms Receiver Successfully Registered In Foreground Service.")
+        } catch (exception: Exception) {
+            Log.e(Tag, "Error Registering Dynamic Sms Receiver", exception)
+        }
+    }
+
+    private fun UnregisterDynamicReceiver() {
+        try {
+            dynamicSmsReceiver?.let { unregisterReceiver(it) }
+            dynamicSmsReceiver = null
+        } catch (ignored: Exception) {
+            // Guard Against Receiver Already Unregistered
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -119,6 +148,7 @@ class SmsForwarderService : Service() {
      */
     override fun onDestroy() {
         super.onDestroy()
+        UnregisterDynamicReceiver()
         Log.w(Tag, "Sms Forwarder Service Destroyed. Enforcing Revival.")
         val preferences = AppPreferences(this)
         if (preferences.isForwardingEnabled) {

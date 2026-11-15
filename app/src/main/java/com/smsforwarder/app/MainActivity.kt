@@ -53,20 +53,19 @@ class MainActivity : AppCompatActivity() {
     // Modern Activity Result Contract For Requesting All Mandatory Telephony Permissions
     private val permissionRequestLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissionResults ->
-        val allGranted = permissionResults.values.all { it }
+    ) { _ ->
+        val smsPermitted = PermissionHelper.hasSmsPermissions(this)
         UpdatePermissionIndicators()
         LoadSimCards()
 
-        if (allGranted) {
-            Toast.makeText(this, "All Required Permissions Granted Successfully!", Toast.LENGTH_SHORT).show()
+        if (smsPermitted) {
+            Toast.makeText(this, "Sms Permissions Granted Successfully!", Toast.LENGTH_SHORT).show()
             AutoPromptBatteryOptimization()
+            if (preferences.isForwardingEnabled) {
+                SmsForwarderService.startService(this)
+            }
         } else {
-            Toast.makeText(
-                this,
-                "Telephony Permissions Required For Forwarding Sms Messages.",
-                Toast.LENGTH_LONG
-            ).show()
+            DisplayPermissionSettingsDialog()
         }
     }
 
@@ -207,7 +206,12 @@ class MainActivity : AppCompatActivity() {
 
         // Grant System Permissions Button Listener
         viewBinding.btnGrantPermissions.setOnClickListener {
-            permissionRequestLauncher.launch(PermissionHelper.getRequiredPermissions())
+            RequestSmsPermissionsWithFallback()
+        }
+
+        // Whole Sms Permission Row Clickable
+        viewBinding.rowPermSms.setOnClickListener {
+            RequestSmsPermissionsWithFallback()
         }
 
         // Request Direct Battery Saver Exemption
@@ -215,8 +219,18 @@ class MainActivity : AppCompatActivity() {
             AutoPromptBatteryOptimization()
         }
 
+        // Whole Battery Row Clickable
+        viewBinding.rowPermBattery.setOnClickListener {
+            AutoPromptBatteryOptimization()
+        }
+
         // Open Manufacturer Background Autostart Settings
         viewBinding.btnOemSettings.setOnClickListener {
+            DisplayOemGuidanceDialog()
+        }
+
+        // Whole Oem Row Clickable
+        viewBinding.rowOemAutostart.setOnClickListener {
             DisplayOemGuidanceDialog()
         }
 
@@ -459,6 +473,37 @@ class MainActivity : AppCompatActivity() {
         Snackbar.make(viewBinding.root, messageText, Snackbar.LENGTH_SHORT)
             .setBackgroundTint(ContextCompat.getColor(this, R.color.bg_card_elevated))
             .setTextColor(ContextCompat.getColor(this, R.color.neon_green))
+            .show()
+    }
+
+    private fun RequestSmsPermissionsWithFallback() {
+        if (PermissionHelper.hasSmsPermissions(this)) {
+            Toast.makeText(this, "Sms Permissions Are Already Granted!", Toast.LENGTH_SHORT).show()
+            UpdatePermissionIndicators()
+            return
+        }
+
+        permissionRequestLauncher.launch(PermissionHelper.getRequiredPermissions())
+    }
+
+    private fun DisplayPermissionSettingsDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Grant Sms Telephony Permissions")
+            .setMessage(
+                "Android Requires Explicit Permission To Intercept And Forward Incoming Sms Messages On Your Device.\n\n" +
+                "Please Tap 'Open Settings', Select 'Permissions', And Allow 'Sms'."
+            )
+            .setPositiveButton("Open Settings") { _, _ ->
+                try {
+                    val settingsIntent = Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                        data = android.net.Uri.fromParts("package", packageName, null)
+                    }
+                    startActivity(settingsIntent)
+                } catch (exception: Exception) {
+                    Toast.makeText(this, "Unable To Open Settings Automatically", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Cancel", null)
             .show()
     }
 

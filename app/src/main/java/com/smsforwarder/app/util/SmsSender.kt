@@ -67,20 +67,26 @@ object SmsSender {
      */
     @Suppress("DEPRECATION")
     private fun ResolveSmsManager(context: Context, subscriptionId: Int): SmsManager {
-        val baseSmsManager = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            context.getSystemService(SmsManager::class.java)
-        } else {
-            SmsManager.getDefault()
-        }
-
-        return if (subscriptionId != -1 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                baseSmsManager.createForSubscriptionId(subscriptionId)
+        val defaultManager = SmsManager.getDefault()
+        return try {
+            val baseSmsManager = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                context.getSystemService(SmsManager::class.java) ?: defaultManager
             } else {
-                SmsManager.getSmsManagerForSubscriptionId(subscriptionId)
+                defaultManager
             }
-        } else {
-            baseSmsManager
+
+            if (subscriptionId != -1 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    baseSmsManager.createForSubscriptionId(subscriptionId)
+                } else {
+                    SmsManager.getSmsManagerForSubscriptionId(subscriptionId)
+                }
+            } else {
+                baseSmsManager
+            }
+        } catch (exception: Exception) {
+            Log.w(Tag, "Failed Resolving Multi-Sim Manager. Falling Back To Default Sms Manager.", exception)
+            defaultManager
         }
     }
 }

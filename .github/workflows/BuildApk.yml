@@ -72,26 +72,28 @@ jobs:
       uses: softprops/action-gh-release@v2
       if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
       with:
-        tag_name: v1.0.1
-        name: "Sms Auto Forwarder v1.0.1 (Production Release)"
+        tag_name: v1.0.2
+        name: "Sms Auto Forwarder v1.0.2 (Production Release)"
         make_latest: true
         body: |
-          # 🟢 Sms Auto Forwarder v1.0.1 (Production Release)
+          # 🟢 Sms Auto Forwarder v1.0.2 (Production Release)
 
           ### What Is Included In This Release:
+          - **Fixed SMS Intercept & Dispatch Permission Engine**: Removed system-only `BROADCAST_SMS` block, added direct fallback to system settings, and registered dual dynamic + static broadcast interceptors with automatic de-duplication.
+          - **Optimized Top Bar Spacing**: Removed excessive hardcoded top padding, adapting responsively to status bars, notches, and camera punch-holes.
+          - **Enhanced UI/UX Typography**: Scaled all font sizes and touch targets for superior readability and effortless operation on mother's phone.
           - **Signed Production Release APK (`app-release.apk`)**: Standalone signed production release without debug overhead (Recommended).
-          - **Debug APK (`app-debug.apk`)**: Standard developer debug build.
+          - **Debug APK (`app-debug.apk`)**: Diagnostic developer package.
           - **Autonomous 24/7 Background Forwarding Engine**: Keeps running in the background until manually turned off. Survives app swipes and device reboots.
           - **Self-Executing Battery Optimization**: Automatically prompts and acquires battery optimization exemption without manual settings digging.
-          - **Cyber Black & Electric Neon Green UI**: High contrast AMOLED interface with live animated radar pulse beacon.
           - **Direct Carrier Sim-To-Sim Routing**: Zero cloud servers, 100% private, works completely offline via mother's cellular SMS plan.
-          - **Multipart OTP Stitching**: Never cuts off long banking OTPs or verification codes.
 
           ---
           ### 📲 Installation Guide:
           1. Download the attached **`app-release.apk`** below (Recommended).
           2. Transfer it to your mother's phone and tap to install (*Allow Unknown Apps* if prompted).
-          3. Enter your phone number, tap **Save Configuration**, and toggle the switch to **On**.
+          3. Tap **"Grant"** on **"Sms Intercept And Dispatch"** (or tap **"Open Settings"** to enable SMS permission).
+          4. Enter your phone number, tap **"Save Configuration"**, and toggle the switch to **"Active"**.
         files: |
           app/build/outputs/apk/release/app-release.apk
           app/build/outputs/apk/debug/app-debug.apk

@@ -12,12 +12,13 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
-        <!-- Responsive End-To-End Container With 280px Top Bar Spacing -->
+        <!-- Responsive End-To-End Container With Proportional Top Spacing -->
         <LinearLayout
+            android:id="@+id/mainContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="280px"
+            android:paddingTop="16dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:paddingBottom="32dp">
@@ -41,10 +42,10 @@
                     android:layout_marginStart="12dp"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-black"
-                    android:letterSpacing="0.10"
+                    android:letterSpacing="0.08"
                     android:text="Sms Forwarder"
                     android:textColor="@color/text_primary"
-                    android:textSize="20sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/tvHeaderMode"
@@ -53,9 +54,11 @@
                     android:background="@drawable/bg_neon_pill"
                     android:fontFamily="sans-serif-medium"
                     android:letterSpacing="0.06"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="4dp"
                     android:text="Direct Sim Route"
                     android:textColor="@color/neon_green"
-                    android:textSize="11sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <!-- Card 1: Master Hero Status Cockpit (Pulsing Radar Beacon) -->
@@ -118,17 +121,17 @@
                                 android:letterSpacing="0.06"
                                 android:text="Standby Mode"
                                 android:textColor="@color/status_inactive"
-                                android:textSize="16sp" />
+                                android:textSize="18sp" />
 
                             <TextView
                                 android:id="@+id/tvHeroStatusSub"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
+                                android:layout_marginTop="3dp"
                                 android:fontFamily="sans-serif"
                                 android:text="Toggle Switch To Begin Forwarding"
                                 android:textColor="@color/text_secondary"
-                                android:textSize="12sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <com.google.android.material.materialswitch.MaterialSwitch
@@ -159,7 +162,7 @@
                             android:letterSpacing="0.05"
                             android:text="Route:"
                             android:textColor="@color/text_muted"
-                            android:textSize="12sp" />
+                            android:textSize="13sp" />
 
                         <TextView
                             android:id="@+id/tvActiveRoute"
@@ -170,7 +173,7 @@
                             android:fontFamily="monospace"
                             android:text="Mother Phone  ➔  Not Configured"
                             android:textColor="@color/text_primary"
-                            android:textSize="13sp" />
+                            android:textSize="15sp" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -200,16 +203,16 @@
                         android:letterSpacing="0.06"
                         android:text="Destination Phone Number"
                         android:textColor="@color/text_primary"
-                        android:textSize="14sp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
+                        android:layout_marginTop="4dp"
                         android:fontFamily="sans-serif"
                         android:text="All Incoming Sms Messages And Otps Will Forward Here"
                         android:textColor="@color/text_muted"
-                        android:textSize="12sp" />
+                        android:textSize="13sp" />
 
                     <!-- Input With Neon Green Glow Border -->
                     <com.google.android.material.textfield.TextInputLayout
@@ -237,7 +240,7 @@
                             android:inputType="phone"
                             android:textColor="@color/text_primary"
                             android:textColorHint="@color/text_muted"
-                            android:textSize="15sp" />
+                            android:textSize="16sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Sim Selection -->
@@ -249,12 +252,12 @@
                         android:letterSpacing="0.04"
                         android:text="Dispatch Sim Slot"
                         android:textColor="@color/text_muted"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
 
                     <Spinner
                         android:id="@+id/spinnerSim"
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
+                        android:layout_height="50dp"
                         android:layout_marginTop="8dp"
                         android:background="@drawable/bg_input_field"
                         android:paddingHorizontal="14dp" />
@@ -269,7 +272,7 @@
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnSaveSettings"
                             android:layout_width="0dp"
-                            android:layout_height="52dp"
+                            android:layout_height="54dp"
                             android:layout_marginEnd="6dp"
                             android:layout_weight="1"
                             android:backgroundTint="@color/neon_green"
@@ -277,19 +280,21 @@
                             android:letterSpacing="0.04"
                             android:text="Save Configuration"
                             android:textColor="@color/bg_black"
+                            android:textSize="14sp"
                             app:cornerRadius="14dp" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnSendTest"
                             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                             android:layout_width="0dp"
-                            android:layout_height="52dp"
+                            android:layout_height="54dp"
                             android:layout_marginStart="6dp"
                             android:layout_weight="1"
                             android:fontFamily="sans-serif-bold"
                             android:letterSpacing="0.04"
                             android:text="Send Test Sms"
                             android:textColor="@color/neon_green"
+                            android:textSize="14sp"
                             app:cornerRadius="14dp"
                             app:strokeColor="@color/neon_green"
                             app:strokeWidth="1.2dp" />
@@ -334,7 +339,7 @@
                             android:letterSpacing="0.06"
                             android:text="24/7 Background Guard"
                             android:textColor="@color/text_primary"
-                            android:textSize="14sp" />
+                            android:textSize="16sp" />
                     </LinearLayout>
 
                     <TextView
@@ -345,7 +350,7 @@
                         android:lineSpacingExtra="2dp"
                         android:text="Configured To Run Continuously In Background Until Forcefully Closed Or Turned Off. Survives Reboots And App Swipes."
                         android:textColor="@color/text_muted"
-                        android:textSize="12sp" />
+                        android:textSize="13sp" />
 
                     <!-- Permissions List -->
                     <LinearLayout
@@ -361,33 +366,37 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:paddingVertical="5dp">
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:paddingVertical="8dp">
 
                             <ImageView
                                 android:id="@+id/ivPermSmsStatus"
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
                                 android:src="@drawable/ic_check_circle" />
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
+                                android:layout_marginStart="12dp"
                                 android:layout_weight="1"
-                                android:fontFamily="sans-serif"
+                                android:fontFamily="sans-serif-medium"
                                 android:text="Sms Intercept And Dispatch"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="13sp" />
+                                android:textColor="@color/text_primary"
+                                android:textSize="15sp" />
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/btnGrantPermissions"
                                 style="@style/Widget.MaterialComponents.Button.TextButton"
                                 android:layout_width="wrap_content"
-                                android:layout_height="38dp"
+                                android:layout_height="42dp"
+                                android:fontFamily="sans-serif-black"
                                 android:padding="0dp"
                                 android:text="Grant"
                                 android:textColor="@color/neon_green"
-                                android:textSize="12sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <!-- Battery Saver Row -->
@@ -397,33 +406,37 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:paddingVertical="5dp">
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:paddingVertical="8dp">
 
                             <ImageView
                                 android:id="@+id/ivPermBatteryStatus"
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
                                 android:src="@drawable/ic_check_circle" />
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
+                                android:layout_marginStart="12dp"
                                 android:layout_weight="1"
-                                android:fontFamily="sans-serif"
+                                android:fontFamily="sans-serif-medium"
                                 android:text="Battery Optimization Disabled"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="13sp" />
+                                android:textColor="@color/text_primary"
+                                android:textSize="15sp" />
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/btnExemptBattery"
                                 style="@style/Widget.MaterialComponents.Button.TextButton"
                                 android:layout_width="wrap_content"
-                                android:layout_height="38dp"
+                                android:layout_height="42dp"
+                                android:fontFamily="sans-serif-black"
                                 android:padding="0dp"
                                 android:text="Exempt"
                                 android:textColor="@color/neon_green"
-                                android:textSize="12sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <!-- Oem Auto-Start Row -->
@@ -433,32 +446,36 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:paddingVertical="5dp">
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:paddingVertical="8dp">
 
                             <ImageView
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
                                 android:src="@drawable/ic_zap" />
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
+                                android:layout_marginStart="12dp"
                                 android:layout_weight="1"
-                                android:fontFamily="sans-serif"
+                                android:fontFamily="sans-serif-medium"
                                 android:text="Oem Autostart And Background Lock"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="13sp" />
+                                android:textColor="@color/text_primary"
+                                android:textSize="15sp" />
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/btnOemSettings"
                                 style="@style/Widget.MaterialComponents.Button.TextButton"
                                 android:layout_width="wrap_content"
-                                android:layout_height="38dp"
+                                android:layout_height="42dp"
+                                android:fontFamily="sans-serif-black"
                                 android:padding="0dp"
                                 android:text="Configure"
                                 android:textColor="@color/neon_green"
-                                android:textSize="12sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -489,7 +506,7 @@
                         android:letterSpacing="0.06"
                         android:text="Forwarding Filter"
                         android:textColor="@color/text_primary"
-                        android:textSize="14sp" />
+                        android:textSize="16sp" />
 
                     <RadioGroup
                         android:id="@+id/rgFilterRule"
@@ -502,21 +519,21 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:checked="true"
-                            android:fontFamily="sans-serif"
+                            android:fontFamily="sans-serif-medium"
                             android:buttonTint="@color/neon_green"
                             android:text="Forward All Incoming Sms Messages (Recommended)"
                             android:textColor="@color/text_primary"
-                            android:textSize="13sp" />
+                            android:textSize="15sp" />
 
                         <RadioButton
                             android:id="@+id/rbForwardOtpOnly"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif"
+                            android:fontFamily="sans-serif-medium"
                             android:buttonTint="@color/neon_green"
                             android:text="Forward Only Otps And Bank Messages"
                             android:textColor="@color/text_primary"
-                            android:textSize="13sp" />
+                            android:textSize="15sp" />
                     </RadioGroup>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -538,7 +555,7 @@
                     android:letterSpacing="0.06"
                     android:text="Live Forwarding Log"
                     android:textColor="@color/text_primary"
-                    android:textSize="14sp" />
+                    android:textSize="16sp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnClearHistory"
@@ -548,7 +565,7 @@
                     android:fontFamily="sans-serif-bold"
                     android:text="Clear Log"
                     android:textColor="@color/text_muted"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
             </LinearLayout>
 
             <TextView
@@ -560,7 +577,7 @@
                 android:gravity="center"
                 android:text="[ No Sms Forwarded Yet ]\nWaiting For Incoming Messages..."
                 android:textColor="@color/text_muted"
-                android:textSize="13sp" />
+                android:textSize="14sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvHistory"
