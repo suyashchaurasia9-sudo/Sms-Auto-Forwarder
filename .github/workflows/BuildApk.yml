@@ -40,8 +40,19 @@ jobs:
     - name: Make Gradle Wrapper Executable
       run: chmod +x gradlew
 
-    - name: Build Debug Apk
-      run: ./gradlew assembleDebug
+    - name: Generate Official Release Keystore
+      run: |
+        keytool -genkey -v -keystore app/release.keystore \
+          -alias smsforwarder \
+          -keyalg RSA \
+          -keysize 2048 \
+          -validity 10000 \
+          -storepass android \
+          -keypass android \
+          -dname "CN=SmsAutoForwarder, OU=Production, O=SmsForwarder, L=Global, S=Global, C=US"
+
+    - name: Build Debug And Release Apks
+      run: ./gradlew assembleDebug assembleRelease
 
     - name: Upload Debug Apk Artifact
       uses: actions/upload-artifact@v4
@@ -50,16 +61,26 @@ jobs:
         path: app/build/outputs/apk/debug/app-debug.apk
         retention-days: 30
 
+    - name: Upload Release Apk Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: SmsForwarder-Release-Apk
+        path: app/build/outputs/apk/release/app-release.apk
+        retention-days: 30
+
     - name: Publish Official Release On GitHub
       uses: softprops/action-gh-release@v2
       if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
       with:
-        tag_name: v1.0.0
-        name: "Sms Auto Forwarder v1.0.0"
+        tag_name: v1.0.1
+        name: "Sms Auto Forwarder v1.0.1 (Production Release)"
+        make_latest: true
         body: |
-          # 🟢 Sms Auto Forwarder v1.0.0
+          # 🟢 Sms Auto Forwarder v1.0.1 (Production Release)
 
-          ### What Is Included in This Release:
+          ### What Is Included In This Release:
+          - **Signed Production Release APK (`app-release.apk`)**: Standalone signed production release without debug overhead (Recommended).
+          - **Debug APK (`app-debug.apk`)**: Standard developer debug build.
           - **Autonomous 24/7 Background Forwarding Engine**: Keeps running in the background until manually turned off. Survives app swipes and device reboots.
           - **Self-Executing Battery Optimization**: Automatically prompts and acquires battery optimization exemption without manual settings digging.
           - **Cyber Black & Electric Neon Green UI**: High contrast AMOLED interface with live animated radar pulse beacon.
@@ -68,9 +89,11 @@ jobs:
 
           ---
           ### 📲 Installation Guide:
-          1. Download the attached **`app-debug.apk`** below.
+          1. Download the attached **`app-release.apk`** below (Recommended).
           2. Transfer it to your mother's phone and tap to install (*Allow Unknown Apps* if prompted).
           3. Enter your phone number, tap **Save Configuration**, and toggle the switch to **On**.
-        files: app/build/outputs/apk/debug/app-debug.apk
+        files: |
+          app/build/outputs/apk/release/app-release.apk
+          app/build/outputs/apk/debug/app-debug.apk
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -11,15 +11,31 @@ android {
         applicationId = "com.smsforwarder.app"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        create("release") {
+            val keystoreFile = file("release.keystore")
+            if (keystoreFile.exists()) {
+                storeFile = keystoreFile
+                storePassword = project.findProperty("RELEASE_STORE_PASSWORD") as String? ?: "android"
+                keyAlias = project.findProperty("RELEASE_KEY_ALIAS") as String? ?: "smsforwarder"
+                keyPassword = project.findProperty("RELEASE_KEY_PASSWORD") as String? ?: "android"
+            } else {
+                // Fallback To Debug Certificate To Guarantee Standalone Installable Release Apk
+                initWith(getByName("debug"))
+            }
+        }
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

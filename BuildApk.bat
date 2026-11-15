@@ -56,19 +56,24 @@ exit /b 1
 
 :FoundJava
 echo [*] Java detected at: %JAVA_EXE%
-echo [*] Building Debug APK using Gradle Wrapper...
+echo [*] Building Production Release And Debug APKs using Gradle Wrapper...
 echo.
 
-call gradlew.bat assembleDebug
+call gradlew.bat assembleRelease assembleDebug
 
 if %errorlevel% equ 0 (
     echo.
     echo ===================================================================
-    echo [SUCCESS] APK built successfully!
-    echo Location: app\build\outputs\apk\debug\app-debug.apk
+    echo [SUCCESS] APKs built successfully!
+    echo Production Release APK: app\build\outputs\apk\release\app-release.apk
+    echo Debug APK:              app\build\outputs\apk\debug\app-debug.apk
     echo ===================================================================
     echo.
-    explorer.exe "app\build\outputs\apk\debug"
+    if exist "app\build\outputs\apk\release" (
+        explorer.exe "app\build\outputs\apk\release"
+    ) else (
+        explorer.exe "app\build\outputs\apk\debug"
+    )
 ) else (
     echo.
     echo [!] Gradle build failed. Check error output above.
