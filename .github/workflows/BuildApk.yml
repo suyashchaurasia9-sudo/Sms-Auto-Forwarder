@@ -41,38 +41,13 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build Debug Apk
-      id: build_apk
-      continue-on-error: true
-      run: |
-        ./gradlew assembleDebug --stacktrace --no-daemon 2>&1 | tee build_output.log
-        if [ ${PIPESTATUS[0]} -ne 0 ]; then
-          exit 1
-        fi
-
-    - name: Commit Diagnostics On Failure
-      if: steps.build_apk.outcome != 'success'
-      run: |
-        tail -n 150 build_output.log > BUILD_DIAGNOSTICS.txt
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-        git add BUILD_DIAGNOSTICS.txt
-        git commit -m "Diagnostics: Capture Gradle Failure Log"
-        git push origin main
-        exit 1
-
-    - name: Prepare Named Distribution Apk
-      run: |
-        mkdir -p release-apk
-        APK_FILE=$(find app/build/outputs/ -name "*.apk" | head -n 1)
-        echo "[*] Located Generated Apk At: $APK_FILE"
-        cp "$APK_FILE" release-apk/Sms-Auto-Forwarder-v1.0.0.apk
-        ls -lh release-apk/
+      run: ./gradlew assembleDebug
 
     - name: Upload Debug Apk Artifact
       uses: actions/upload-artifact@v4
       with:
         name: SmsForwarder-Debug-Apk
-        path: release-apk/Sms-Auto-Forwarder-v1.0.0.apk
+        path: app/build/outputs/apk/debug/app-debug.apk
         retention-days: 30
 
     - name: Publish Official Release On GitHub
@@ -93,10 +68,9 @@ jobs:
 
           ---
           ### 📲 Installation Guide:
-          1. Download the attached **`Sms-Auto-Forwarder-v1.0.0.apk`** below.
+          1. Download the attached **`app-debug.apk`** below.
           2. Transfer it to your mother's phone and tap to install (*Allow Unknown Apps* if prompted).
           3. Enter your phone number, tap **Save Configuration**, and toggle the switch to **On**.
-        files: |
-          release-apk/Sms-Auto-Forwarder-v1.0.0.apk
+        files: app/build/outputs/apk/debug/app-debug.apk
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
