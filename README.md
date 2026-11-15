@@ -11,7 +11,16 @@
 [![Target Sdk](https://img.shields.io/badge/Target%20Sdk-Android%2014%20(Api%2034)-00E676?style=for-the-badge&logo=android&logoColor=080B09)](https://developer.android.com/about/versions/14)
 [![Background Engine](https://img.shields.io/badge/Service-Persistent%2024%2F7-00E676?style=for-the-badge&logo=speedtest&logoColor=080B09)](#uninterrupted-background-guard)
 [![Ui Theme](https://img.shields.io/badge/Theme-Cyber%20Black%20%26%20Neon%20Green-080B09?style=for-the-badge&logo=materialdesign&logoColor=00E676)](#visual-cockpit-and-responsive-design)
+[![Release](https://img.shields.io/github/v/release/suyashchaurasia9-sudo/Sms-Auto-Forwarder?style=for-the-badge&logo=github&color=00E676)](https://github.com/suyashchaurasia9-sudo/Sms-Auto-Forwarder/releases/latest)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/suyashchaurasia9-sudo/Sms-Auto-Forwarder/BuildApk.yml?style=for-the-badge&logo=githubactions&logoColor=080B09&color=00E676)](https://github.com/suyashchaurasia9-sudo/Sms-Auto-Forwarder/actions)
 [![License](https://img.shields.io/badge/License-Mit-00E676?style=for-the-badge)](LICENSE)
+
+<br/>
+
+<a href="https://github.com/suyashchaurasia9-sudo/Sms-Auto-Forwarder/releases/latest/download/app-debug.apk">
+  <img src="https://img.shields.io/badge/Download%20Apk-Official%20v1.0.0-00E676?style=for-the-badge&logo=android&logoColor=080B09" alt="Download Apk" height="42"/>
+</a>
+
 
 </div>
 
