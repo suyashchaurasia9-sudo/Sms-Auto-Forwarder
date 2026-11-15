@@ -26,14 +26,25 @@
     <color name="text_muted">#4B5563</color>
     <color name="text_accent">#00E676</color>
 
-    <!-- Statuses -->
+    <!-- Statuses (Base & Compatibility) -->
     <color name="status_active">#00E676</color>
+    <color name="status_active_bg">#0F381F</color>
+    <color name="status_active_text">#00E676</color>
     <color name="status_active_glow">#2600E676</color>
+
     <color name="status_inactive">#4B5563</color>
+    <color name="status_inactive_bg">#1A4B5563</color>
+    <color name="status_inactive_text">#9CA3AF</color>
     <color name="status_inactive_glow">#1A4B5563</color>
+
     <color name="status_error">#FF5252</color>
+    <color name="status_error_bg">#26FF5252</color>
+    <color name="status_error_text">#FF5252</color>
     <color name="status_error_glow">#26FF5252</color>
+
     <color name="status_warning">#FFB300</color>
+    <color name="status_warning_bg">#33FFB300</color>
+    <color name="status_warning_text">#FFB300</color>
 
     <!-- Component Colors for Theme -->
     <color name="primary">#00E676</color>
