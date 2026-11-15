@@ -1,4 +1,4 @@
-name: Build Android Apk
+name: Build And Publish Android Apk
 
 on:
   push:
@@ -7,9 +7,12 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
-    name: Compile And Package Apk
+    name: Compile, Package And Publish Apk
     runs-on: ubuntu-latest
 
     steps:
@@ -21,22 +24,59 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+        cache: gradle
 
-    - name: Set Up Gradle 8.4
-      uses: gradle/actions/setup-gradle@v3
-      with:
-        gradle-version: '8.4'
+    - name: Set Up Android Sdk Environment
+      uses: android-actions/setup-android@v4
+
+    - name: Ensure Gradle Wrapper Jar Exists
+      run: |
+        if [ ! -f gradle/wrapper/gradle-wrapper.jar ]; then
+          echo "[*] Downloading official gradle-wrapper.jar..."
+          mkdir -p gradle/wrapper
+          curl -Lo gradle/wrapper/gradle-wrapper.jar https://raw.githubusercontent.com/gradle/gradle/v8.4.0/gradle/wrapper/gradle-wrapper.jar
+        fi
+
+    - name: Make Gradle Wrapper Executable
+      run: chmod +x gradlew
 
     - name: Build Debug Apk
-      run: gradle assembleDebug
+      run: ./gradlew assembleDebug --stacktrace
 
-    - name: Verify Generated Apk
+    - name: Prepare Named Distribution Apk
       run: |
-        ls -lh app/build/outputs/apk/debug/app-debug.apk
+        cp app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/Sms-Auto-Forwarder-v1.0.0.apk
+        ls -lh app/build/outputs/apk/debug/
 
     - name: Upload Debug Apk Artifact
       uses: actions/upload-artifact@v4
       with:
         name: SmsForwarder-Debug-Apk
-        path: app/build/outputs/apk/debug/app-debug.apk
+        path: app/build/outputs/apk/debug/Sms-Auto-Forwarder-v1.0.0.apk
         retention-days: 30
+
+    - name: Publish Official Release On GitHub
+      uses: softprops/action-gh-release@v2
+      if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+      with:
+        tag_name: v1.0.0
+        name: "Sms Auto Forwarder v1.0.0"
+        body: |
+          # 🟢 Sms Auto Forwarder v1.0.0
+
+          ### What Is Included in This Release:
+          - **Autonomous 24/7 Background Forwarding Engine**: Keeps running in the background until manually turned off. Survives app swipes and device reboots.
+          - **Self-Executing Battery Optimization**: Automatically prompts and acquires battery optimization exemption without manual settings digging.
+          - **Cyber Black & Electric Neon Green UI**: High contrast AMOLED interface with live animated radar pulse beacon.
+          - **Direct Carrier Sim-To-Sim Routing**: Zero cloud servers, 100% private, works completely offline via mother's cellular SMS plan.
+          - **Multipart OTP Stitching**: Never cuts off long banking OTPs or verification codes.
+
+          ---
+          ### 📲 Installation Guide:
+          1. Download the attached **`Sms-Auto-Forwarder-v1.0.0.apk`** below.
+          2. Transfer it to your mother's phone and tap to install (*Allow Unknown Apps* if prompted).
+          3. Enter your phone number, tap **Save Configuration**, and toggle the switch to **On**.
+        files: |
+          app/build/outputs/apk/debug/Sms-Auto-Forwarder-v1.0.0.apk
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
