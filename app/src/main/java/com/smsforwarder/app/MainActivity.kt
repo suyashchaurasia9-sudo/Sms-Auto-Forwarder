@@ -488,9 +488,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun DisplayPermissionSettingsDialog() {
         AlertDialog.Builder(this)
-            .setTitle("Grant Sms Telephony Permissions")
+            .setTitle("Grant Sms Permissions")
             .setMessage(
-                "Android Requires Explicit Permission To Intercept And Forward Incoming Sms Messages On Your Device.\n\n" +
+                "To Copy Incoming Messages And Forward Them To Your Phone, Android Requires Sms Permission.\n\n" +
                 "Please Tap 'Open Settings', Select 'Permissions', And Allow 'Sms'."
             )
             .setPositiveButton("Open Settings") { _, _ ->

@@ -13,13 +13,12 @@ object PermissionHelper {
 
     /**
      * Retrieves An Array Of All Mandatory System Permissions Required By The Application.
+     * Strictly Requests Only Sms Copy And Send Permissions Without Unnecessary Phone Call Access.
      */
     fun getRequiredPermissions(): Array<String> {
         val permissionsList = mutableListOf(
             Manifest.permission.RECEIVE_SMS,
-            Manifest.permission.SEND_SMS,
-            Manifest.permission.READ_SMS,
-            Manifest.permission.READ_PHONE_STATE
+            Manifest.permission.SEND_SMS
         )
 
         // Include Post Notifications Permission For Android 13 Tiramisu And Newer
