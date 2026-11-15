@@ -21,13 +21,14 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-        cache: gradle
 
-    - name: Grant Execute Permission For Gradlew
-      run: chmod +x gradlew
+    - name: Set Up Gradle 8.4
+      uses: gradle/actions/setup-gradle@v3
+      with:
+        gradle-version: '8.4'
 
     - name: Build Debug Apk
-      run: ./gradlew assembleDebug
+      run: gradle assembleDebug
 
     - name: Verify Generated Apk
       run: |
