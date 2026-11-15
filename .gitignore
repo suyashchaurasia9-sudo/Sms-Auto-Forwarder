@@ -1,0 +1,43 @@
+# Built Application Packages
+*.apk
+*.ap_
+*.aab
+
+# Java Class Files
+*.class
+
+# Log Files
+*.log
+
+# Android Studio & IntelliJ Files
+*.iml
+.idea/
+.gradle/
+build/
+app/build/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Local Configuration (Do Not Commit Private Local Paths)
+local.properties
+
+# Signing Keys & Credentials (Critical For Public Repos)
+*.jks
+*.keystore
+*.p12
+*.key
+signing.properties
+
+# Google Services / Sensitive Tokens
+google-services.json
+
+# Operating System Hidden Caches
+.DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+ehthumbs.db
+
+# Profiler & Crash Dump Files
+*.hprof

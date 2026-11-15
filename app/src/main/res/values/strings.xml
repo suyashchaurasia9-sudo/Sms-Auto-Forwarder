@@ -1,0 +1,56 @@
+<resources>
+    <!-- Application Identity -->
+    <string name="app_name">Sms Auto Forwarder</string>
+    <string name="app_tagline">Sim To Sim Sms Forwarding For Otps And Alerts</string>
+
+    <!-- Master Hero Status -->
+    <string name="forwarding_status_title">Forwarding Engine</string>
+    <string name="forwarding_active">Running In Background</string>
+    <string name="forwarding_disabled">Standby Mode</string>
+    <string name="target_phone_label">Your Destination Phone Number</string>
+    <string name="target_phone_hint">+91 98765 43210 (Country Code Included)</string>
+    <string name="target_phone_helper">All Incoming Sms Messages And Otps Will Be Dispatched Directly To This Phone Number Via Sim.</string>
+    <string name="btn_save_settings">Save Configuration</string>
+    <string name="btn_send_test">Send Test Sms</string>
+
+    <!-- Permissions And Background Persistence -->
+    <string name="permissions_title">24/7 Background Guard</string>
+    <string name="permissions_subtitle">Configured To Run Continuously In Background Until Forcefully Closed Or Turned Off. Survives Reboots And App Swipes.</string>
+    <string name="perm_sms_receive">Receive Incoming Sms Messages</string>
+    <string name="perm_sms_send">Dispatch Outgoing Sms Messages Via Sim</string>
+    <string name="perm_notifications">Persistent Background Notification</string>
+    <string name="perm_battery">Battery Saver Exemption (Required For Background)</string>
+    <string name="btn_grant_permissions">Grant Permissions</string>
+    <string name="btn_exempt_battery">Exempt Battery</string>
+    <string name="btn_oem_configure">Configure Autostart</string>
+
+    <!-- Sim Selection -->
+    <string name="sim_selection_title">Dispatch Sim Slot</string>
+    <string name="sim_default">Default System Sim</string>
+
+    <!-- Forwarding Filter Rules -->
+    <string name="filters_title">Forwarding Filter</string>
+    <string name="forward_all_sms">Forward All Incoming Sms Messages (Recommended)</string>
+    <string name="forward_only_otp">Forward Only Otps And Financial Alerts</string>
+    <string name="prefix_template_label">Forwarded Message Prefix</string>
+    <string name="prefix_template_default">[Fwd From {sender}]:\n</string>
+
+    <!-- History Stream -->
+    <string name="history_title">Live Forwarding Log</string>
+    <string name="history_empty">[ No Sms Forwarded Yet ]\nWaiting For Incoming Messages...</string>
+    <string name="btn_clear_history">Clear Log</string>
+
+    <!-- Background Service Notification -->
+    <string name="service_channel_name">Sms Forwarder Background Service</string>
+    <string name="service_channel_desc">Maintains Persistent Process To Ensure Sms Forwarding Never Stops.</string>
+    <string name="service_notification_title">Sms Forwarder: Active In Background</string>
+    <string name="service_notification_text">Forwarding Incoming Sms Messages To %1$s</string>
+
+    <!-- User Feedback And Dialogs -->
+    <string name="error_invalid_phone">Please Enter A Valid Phone Number (Including Country Code).</string>
+    <string name="settings_saved_success">Configuration Saved Successfully!</string>
+    <string name="test_sms_sending">Dispatching Test Sms To %1$s...</string>
+    <string name="test_sms_success">Test Sms Successfully Dispatched Via Sim!</string>
+    <string name="test_sms_failed">Failed To Dispatch Sms: %1$s</string>
+    <string name="permission_rationale">This Application Requires Sms Permissions To Forward Incoming Bank Messages And Otps To Your Number.</string>
+</resources>

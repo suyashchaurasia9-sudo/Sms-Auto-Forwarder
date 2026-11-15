@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- AMOLED Pure Blacks & Obsidian Backgrounds -->
+    <color name="bg_black">#080B09</color>
+    <color name="bg_surface">#0F1410</color>
+    <color name="bg_card">#141A15</color>
+    <color name="bg_card_elevated">#1A221C</color>
+    <color name="bg_input">#0D120E</color>
+
+    <!-- Neon & Emerald Green Palette -->
+    <color name="neon_green">#00E676</color>
+    <color name="neon_green_bright">#00FF88</color>
+    <color name="neon_green_glow">#3300E676</color>
+    <color name="neon_green_dim">#0F381F</color>
+    <color name="emerald_accent">#10B981</color>
+    <color name="emerald_dark">#064E3B</color>
+
+    <!-- Borders & Dividers -->
+    <color name="border_glass">#223226</color>
+    <color name="border_glass_active">#00E676</color>
+    <color name="border_subtle">#1A261D</color>
+
+    <!-- Typography -->
+    <color name="text_primary">#F0FDF4</color>
+    <color name="text_secondary">#9CA3AF</color>
+    <color name="text_muted">#4B5563</color>
+    <color name="text_accent">#00E676</color>
+
+    <!-- Statuses -->
+    <color name="status_active">#00E676</color>
+    <color name="status_active_glow">#2600E676</color>
+    <color name="status_inactive">#4B5563</color>
+    <color name="status_inactive_glow">#1A4B5563</color>
+    <color name="status_error">#FF5252</color>
+    <color name="status_error_glow">#26FF5252</color>
+    <color name="status_warning">#FFB300</color>
+
+    <!-- Component Colors for Theme -->
+    <color name="primary">#00E676</color>
+    <color name="on_primary">#080B09</color>
+    <color name="secondary">#10B981</color>
+    <color name="on_secondary">#080B09</color>
+    <color name="background">#080B09</color>
+    <color name="surface">#0F1410</color>
+</resources>

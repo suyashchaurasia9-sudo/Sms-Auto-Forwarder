@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.SMSForwarder" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/neon_green</item>
+        <item name="colorOnPrimary">@color/bg_black</item>
+        <item name="colorSecondary">@color/emerald_accent</item>
+        <item name="colorOnSecondary">@color/bg_black</item>
+        <item name="android:statusBarColor">@color/bg_black</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">@color/bg_black</item>
+        <item name="android:windowBackground">@color/bg_black</item>
+        <item name="colorSurface">@color/bg_surface</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+    </style>
+</resources>
